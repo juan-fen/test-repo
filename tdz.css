@@ -1,0 +1,329 @@
+/* ==============================
+   GLOBAL RESET
+============================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: #ff3333;
+  background: radial-gradient(circle at top, #550000 0%, #000 55%, #000);
+  background-size: 200% 200%;
+  animation: bg-pulse 18s ease-in-out infinite;
+}
+
+@keyframes bg-pulse {
+  0% {
+    background-position: 50% 0%;
+  }
+  50% {
+    background-position: 50% 100%;
+  }
+  100% {
+    background-position: 50% 0%;
+  }
+}
+
+/* ==============================
+   GLOBAL TEXT BACKGROUND
+============================== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+span,
+strong,
+button {
+  background: #000;
+  padding: 4px 8px;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+/* ==============================
+   HEADER
+============================== */
+header {
+  padding: 14px 20px;
+  display: flex;
+  justify-content: flex-start;
+  position: relative;
+}
+
+.nav-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav-toggle span {
+  width: 26px;
+  height: 3px;
+  background: #ff3333;
+}
+
+.nav-dropdown {
+  display: none;
+  position: absolute;
+  top: 55px;
+  left: 20px;
+  background: #111;
+  padding: 14px 20px;
+  border-radius: 6px;
+}
+
+.nav-dropdown a {
+  display: block;
+  padding: 8px 0;
+  text-decoration: none;
+  color: #ff3333;
+}
+
+.nav--open {
+  display: block;
+}
+
+/* ==============================
+   HERO SECTION
+============================== */
+.hero {
+  display: flex;
+  position: relative;
+}
+
+/* KS — aligned & lowered */
+.hero__img--left {
+  width: 50%;
+  height: 100vh;
+  object-fit: cover;
+  object-position: 40% 15%;
+  display: block;
+}
+
+/* RA — centered */
+.hero__img--right {
+  width: 50%;
+  height: 100vh;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.hero__content {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+.hero__panel {
+  background: rgba(0, 0, 0, 0.65);
+  padding: 18px;
+  width: 600px;
+  max-width: 90%;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.hero__logo {
+  width: 160px;
+}
+
+/* ==============================
+   SLIDESHOW
+============================== */
+.about-slider {
+  margin: 20px auto;
+  position: relative;
+  max-width: 360px;
+}
+
+.about-slide {
+  display: none;
+  width: 100%;
+}
+
+.about-slide--active {
+  display: block;
+}
+
+.slider-btn {
+  position: absolute;
+  top: 45%;
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  color: #ff3333;
+  padding: 4px 10px;
+  font-size: 28px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.slider-btn--prev {
+  left: -8px;
+}
+.slider-btn--next {
+  right: -8px;
+}
+
+/* ==============================
+   FILMS — 4 COLUMN LAYOUT
+============================== */
+#films {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.film-grid {
+  max-width: 1400px;
+  margin: 40px auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.film {
+  display: contents;
+}
+
+/* POSTER BLOCK */
+.film__poster {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* POSTER CONTAINER (BADGE OVER IMAGE) */
+.film__poster-wrap {
+  position: relative;
+  width: 100%;
+  height: 350px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* POSTER IMAGE FILLS CONTAINER */
+.film__poster-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Poster fills area */
+  object-position: center;
+}
+
+/* BADGE ON TOP OF POSTER (TOP-LEFT CORNER) */
+.film-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+
+  background: #000;
+  color: #ff3333;
+
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-weight: bold;
+  font-size: 14px;
+
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.9), 0 0 25px rgba(0, 0, 0, 0.7),
+    0 0 35px rgba(0, 0, 0, 0.5);
+}
+
+/* TRAILER BLOCK */
+.film__trailer {
+  height: 350px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.film__trailer iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* ==============================
+   WATCH TRAILER BUTTON
+============================== */
+.watch-btn {
+  margin-top: 10px;
+  background: #000;
+  color: #ff3333;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 14px;
+  display: inline-block;
+  transition: 0.2s ease;
+}
+
+.watch-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(255, 51, 51, 0.9), 0 0 18px rgba(255, 51, 51, 0.6);
+}
+
+/* ==============================
+   CASTING / JOIN
+============================== */
+#casting,
+#join {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+/* ==============================
+   FOOTER
+============================== */
+footer {
+  padding: 20px;
+  text-align: center;
+  background: #000;
+}
+
+/* ==============================
+   ANIMATIONS
+============================== */
+.js-fade,
+.js-slide-left,
+.js-slide-right {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 0.7s ease-out;
+}
+
+.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ==============================
+   MOBILE
+============================== */
+@media (max-width: 768px) {
+  .hero__img--left,
+  .hero__img--right {
+    display: none;
+  }
+
+  .film-grid {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .film__poster-wrap,
+  .film__trailer {
+    height: 260px;
+  }
+}

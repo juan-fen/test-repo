@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+    <title>ShawElias Talent Agency</title>
+    <link rel="stylesheet" href="tdz.css" />
+  </head>
+
+  <body>
+    <header>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="nav-dropdown">
+        <a href="#films">Films</a>
+        <a href="#casting">Casting</a>
+        <a href="#join">Join</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero js-fade">
+        <!-- KS Left -->
+        <img
+          src="https://picsum.photos/200/300.webp"
+          alt="Kareem Shaw"
+          class="hero__img hero__img--left"
+        />
+
+        <!-- RA Right -->
+        <img
+          src="https://picsum.photos/200/300.webp"
+          alt="Ra Certified"
+          class="hero__img hero__img--right"
+        />
+
+        <div class="hero__content">
+          <div class="hero__panel">
+            <img src="setaalt.png" alt="ShawElias Logo" class="hero__logo" />
+
+            <h2>Real People. Real Roles. Real Shots On Screen.</h2>
+
+            <p>
+              We connect everyday people, actors, performers, and creators with
+              indie films, web series, visuals, and active productions.
+            </p>
+
+            <p>
+              Be considered for projects like <strong>Yo Bro</strong> and
+              <strong>The Ganja</strong>.
+            </p>
+
+            <!-- SLIDESHOW -->
+            <div class="about-slider" id="about-slider">
+              <button class="slider-btn slider-btn--prev">&#10094;</button>
+
+              <div class="about-slides">
+                <img
+                  src="talent1.jpg"
+                  class="about-slide about-slide--active"
+                />
+                <img src="talent2.jpg" class="about-slide" />
+                <img src="talent3.jpg" class="about-slide" />
+              </div>
+
+              <button class="slider-btn slider-btn--next">&#10095;</button>
+            </div>
+
+            <a href="#join" class="btn btn--light">
+              Join the Casting List – $25 / Year
+            </a>
+
+            <p class="hero__tagline">
+              Actors • Models • Rappers • Creators — all are welcome.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- =======================
+           FEATURED FILMS — 4 COLUMNS
+      ======================== -->
+      <section id="films" class="js-fade">
+        <h2>Featured Films</h2>
+
+        <div class="film-grid">
+          <!-- COLUMN 1 — YO BRO POSTER -->
+          <article class="film">
+            <div class="film__poster">
+              <div class="film__poster-wrap">
+                <a
+                  href="https://tubitv.com/movies/100044287/yo-bro-the-movie"
+                  target="_blank"
+                  class="film-badge"
+                >
+                  Watch Now on Tubi
+                </a>
+
+                <img src="yobro.jpg" alt="Yo Bro Poster" />
+              </div>
+
+              <p class="film-desc">
+                A Philly comedy about friendship, hustle, and wild situations.
+              </p>
+            </div>
+          </article>
+
+          <!-- COLUMN 2 — YO BRO TRAILER -->
+          <article class="film">
+            <div class="film__trailer">
+              <iframe
+                src="https://www.youtube.com/embed/pOcjqiOZS5w"
+                title="Yo Bro Trailer"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </article>
+
+          <!-- COLUMN 3 — GANJA POSTER -->
+          <article class="film">
+            <div class="film__poster">
+              <div class="film__poster-wrap">
+                <a
+                  href="https://tubitv.com/movies/100023457/the-ganja"
+                  target="_blank"
+                  class="film-badge"
+                >
+                  Watch Now on Tubi
+                </a>
+
+                <img src="tg.jpg" alt="The Ganja Poster" />
+              </div>
+
+              <p class="film-desc">
+                A gritty street drama of loyalty, money, and consequences.
+              </p>
+            </div>
+          </article>
+
+          <!-- COLUMN 4 — GANJA TRAILER -->
+          <article class="film">
+            <div class="film__trailer">
+              <iframe
+                src="https://www.youtube.com/embed/xHb7pkAt0Sg"
+                title="The Ganja Trailer"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </article>
+        </div>
+        <!-- Bootstrap slideshow -->
+        <div id="carouselExampleIndicators" class="carousel slide">
+          <div class="carousel-indicators">
+            <button
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide-to="0"
+              class="active"
+              aria-current="true"
+              aria-label="Slide 1"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide-to="1"
+              aria-label="Slide 2"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide-to="2"
+              aria-label="Slide 3"
+            ></button>
+          </div>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <iframe
+                src="https://www.youtube.com/embed/pOcjqiOZS5w"
+                title="Yo Bro Trailer"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <div class="carousel-item">
+              <iframe
+                src="https://www.youtube.com/embed/xHb7pkAt0Sg"
+                title="The Ganja Trailer"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <div class="carousel-item">
+              <iframe
+                src="https://www.youtube.com/embed/pOcjqiOZS5w"
+                title="Yo Bro Trailer"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- =======================
+           CASTING
+      ======================== -->
+      <section id="casting" class="js-fade">
+        <h2>Casting & Opportunities</h2>
+
+        <p>Real casting notices for upcoming film and visual projects.</p>
+        <p>Beginner or experienced — everyone gets real opportunities.</p>
+      </section>
+
+      <!-- =======================
+           JOIN
+      ======================== -->
+      <section id="join" class="js-fade">
+        <h2>Join the Talent Network – $25 / Year</h2>
+
+        <p>12 months of casting alerts and updates.</p>
+
+        <a href="#" class="btn btn--light">Pay $25 & Get Started</a>
+
+        <p>You’ll then receive the submission link.</p>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2026 ShawElias Talent Agency. All rights reserved.</p>
+    </footer>
+
+    <!-- =======================
+         JS
+    ======================== -->
+    <script>
+      /* NAV TOGGLE */
+      const navToggle = document.querySelector(".nav-toggle");
+      const navDropdown = document.querySelector(".nav-dropdown");
+      navToggle.addEventListener("click", () => {
+        navDropdown.classList.toggle("nav--open");
+      });
+
+      /* SLIDER */
+      const slider = document.getElementById("about-slider");
+      const slides = slider.querySelectorAll(".about-slide");
+      const prev = slider.querySelector(".slider-btn--prev");
+      const next = slider.querySelector(".slider-btn--next");
+
+      let index = 0;
+
+      function show(i) {
+        slides.forEach((s, idx) =>
+          s.classList.toggle("about-slide--active", idx === i)
+        );
+      }
+
+      next.addEventListener("click", () => {
+        index = (index + 1) % slides.length;
+        show(index);
+      });
+
+      prev.addEventListener("click", () => {
+        index = (index - 1 + slides.length) % slides.length;
+        show(index);
+      });
+
+      /* SCROLL EFFECTS */
+      const animated = document.querySelectorAll(
+        ".js-fade, .js-slide-left, .js-slide-right"
+      );
+
+      const obs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) entry.target.classList.add("is-visible");
+          });
+        },
+        { threshold: 0.1 }
+      );
+
+      animated.forEach((el) => obs.observe(el));
+    </script>
+  </body>
+</html>
