@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Snail Jump</title>
+    <style>
+      /* --- CSS STYLES --- */
+      @import url("https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap");
+
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #333;
+        font-family: "Fredoka One", cursive; /* Fun, game-like font */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+        touch-action: none; /* Prevent scrolling on mobile */
+      }
+
+      /* The main container for the game to keep aspect ratio or centering */
+      #game-container {
+        position: relative;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        width: 400px;
+        height: 600px;
+        max-width: 100%;
+        max-height: 100%;
+      }
+
+      canvas {
+        display: block;
+        background: linear-gradient(
+          to bottom,
+          #87ceeb,
+          #e0f7fa
+        ); /* Sky background */
+        width: 100%;
+        height: 100%;
+      }
+
+      /* UI Overlays (Start Screen, Game Over, Score) */
+      .ui-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        pointer-events: none; /* Let clicks pass through to canvas usually, but we toggle this */
+      }
+
+      /* Interactive UI elements need pointer-events back on */
+      .interactive {
+        pointer-events: auto;
+      }
+
+      h1 {
+        color: #ff6f61;
+        font-size: 3rem;
+        margin: 0 0 10px 0;
+        text-shadow: 2px 2px 0px #fff;
+      }
+
+      p {
+        color: #555;
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+      }
+
+      .btn {
+        background-color: #4caf50;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 1.5rem;
+        font-family: "Fredoka One", cursive;
+        border-radius: 12px;
+        cursor: pointer;
+        box-shadow: 0 5px #2e7d32;
+        transition: transform 0.1s, box-shadow 0.1s;
+      }
+
+      .btn:active {
+        transform: translateY(4px);
+        box-shadow: 0 1px #2e7d32;
+      }
+
+      #score-display {
+        position: absolute;
+        top: 20px;
+        width: 100%;
+        text-align: center;
+        font-size: 3rem;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        pointer-events: none;
+        z-index: 10;
+      }
+
+      /* Classes to toggle visibility */
+      .hidden {
+        display: none !important;
+      }
+
+      /* Simple animation for the logo */
+      .bounce {
+        animation: bounce 2s infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-20px);
+        }
+        60% {
+          transform: translateY(-10px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="game-container">
+      <!-- The Canvas where the game is drawn -->
+      <canvas id="gameCanvas" width="400" height="600"></canvas>
+
+      <!-- Live Score -->
+      <div id="score-display" class="hidden">0</div>
+
+      <!-- Start Screen -->
+      <div id="start-screen" class="ui-overlay interactive">
+        <h1 class="bounce">Snail Jump</h1>
+        <p
+          style="
+            background: rgba(255, 255, 255, 0.8);
+            padding: 5px 10px;
+            border-radius: 8px;
+          "
+        >
+          Press SPACE or Tap to Jump
+        </p>
+        <div style="font-size: 4rem; margin-bottom: 20px">🐌</div>
+        <button id="start-btn" class="btn">PLAY</button>
+      </div>
+
+      <!-- Game Over Screen -->
+      <div id="game-over-screen" class="ui-overlay interactive hidden">
+        <h1>Game Over</h1>
+        <p>Score: <span id="final-score">0</span></p>
+        <div style="font-size: 4rem; margin-bottom: 20px">💥</div>
+        <button id="restart-btn" class="btn">RESTART</button>
+      </div>
+    </div>
+
+    <script>
+      /* --- JAVASCRIPT LOGIC --- */
+
+      // Game Constants
+      const CANVAS_WIDTH = 400;
+      const CANVAS_HEIGHT = 600;
+      const GRAVITY = 0.25;
+      const JUMP_STRENGTH = -6; // Negative value to move up
+      const PIPE_SPEED = 2.5; // Speed of obstacles
+      const PIPE_SPAWN_RATE = 140; // Frames between pipes
+      const PIPE_GAP = 160; // Space between top and bottom pipes
+      const PIPE_WIDTH = 60;
+
+      // Colors
+      const COLOR_PIPE_BORDER = "#2e7d32"; // Dark Green
+      const COLOR_PIPE_FILL = "#4caf50"; // Light Green
+
+      // Game Variables
+      let canvas, ctx;
+      let frames = 0;
+      let score = 0;
+      let animationId;
+
+      // Game State Machine
+      // states: 'START', 'PLAYING', 'GAMEOVER'
+      let currentState = "START";
+
+      // DOM Elements
+      const startScreen = document.getElementById("start-screen");
+      const gameOverScreen = document.getElementById("game-over-screen");
+      const scoreDisplay = document.getElementById("score-display");
+      const finalScoreSpan = document.getElementById("final-score");
+      const startBtn = document.getElementById("start-btn");
+      const restartBtn = document.getElementById("restart-btn");
+
+      // --- CLASSES ---
+
+      class Snail {
+        constructor() {
+          this.width = 34;
+          this.height = 34;
+          this.x = 50; // Fixed horizontal position
+          this.y = 150;
+          this.velocity = 0;
+          this.radius = 17; // For visual rendering if we want a circle, or hitboxing
+          this.rotation = 0;
+        }
+
+        draw() {
+          ctx.save();
+          ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
+
+          // Rotate snail based on velocity
+          // Clamp rotation between -25 and 90 degrees
+          if (this.velocity < 0) this.rotation = -25 * (Math.PI / 180);
+          else if (this.velocity > 0) {
+            this.rotation += 2 * (Math.PI / 180);
+            if (this.rotation > 90 * (Math.PI / 180))
+              this.rotation = 90 * (Math.PI / 180);
+          } else {
+            this.rotation = 0;
+          }
+
+          ctx.rotate(this.rotation);
+
+          // Draw Snail Emoji
+          ctx.font = "34px Arial";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          // Flip horizontally so the snail faces right (emojis often face left)
+          ctx.scale(-1, 1);
+          ctx.fillText("🐌", 0, 0);
+
+          ctx.restore();
+        }
+
+        update() {
+          // Apply Gravity
+          this.velocity += GRAVITY;
+          this.y += this.velocity;
+
+          // Floor Collision
+          if (this.y + this.height >= CANVAS_HEIGHT) {
+            this.y = CANVAS_HEIGHT - this.height;
+            endGame();
+          }
+
+          // Ceiling Collision (Optional - stops them flying over pipes)
+          if (this.y < 0) {
+            this.y = 0;
+            this.velocity = 0;
+          }
+        }
+
+        jump() {
+          this.velocity = JUMP_STRENGTH;
+          this.rotation = -25 * (Math.PI / 180);
+        }
+      }
+
+      class Pipe {
+        constructor() {
+          this.x = CANVAS_WIDTH;
+          this.width = PIPE_WIDTH;
+          // Random height logic
+          // Minimum pipe height is 50px, leaving room for gap
+          const minPipeHeight = 50;
+          const maxTopHeight = CANVAS_HEIGHT - PIPE_GAP - minPipeHeight;
+
+          // Height of the top pipe
+          this.topHeight = Math.floor(
+            Math.random() * (maxTopHeight - minPipeHeight + 1) + minPipeHeight
+          );
+
+          this.passed = false; // To track score increment
+        }
+
+        draw() {
+          ctx.fillStyle = COLOR_PIPE_FILL;
+          ctx.strokeStyle = COLOR_PIPE_BORDER;
+          ctx.lineWidth = 2;
+
+          // Draw Top Pipe
+          ctx.fillRect(this.x, 0, this.width, this.topHeight);
+          ctx.strokeRect(this.x, 0, this.width, this.topHeight);
+
+          // Draw Bottom Pipe cap styling
+          ctx.fillStyle = "#388E3C"; // Slightly darker cap
+          ctx.fillRect(this.x - 2, this.topHeight - 20, this.width + 4, 20);
+          ctx.fillStyle = COLOR_PIPE_FILL; // Reset
+
+          // Calculate Bottom Pipe y position
+          const bottomPipeY = this.topHeight + PIPE_GAP;
+          const bottomPipeHeight = CANVAS_HEIGHT - bottomPipeY;
+
+          // Draw Bottom Pipe
+          ctx.fillRect(this.x, bottomPipeY, this.width, bottomPipeHeight);
+          ctx.strokeRect(this.x, bottomPipeY, this.width, bottomPipeHeight);
+
+          // Draw Bottom Pipe cap
+          ctx.fillStyle = "#388E3C";
+          ctx.fillRect(this.x - 2, bottomPipeY, this.width + 4, 20);
+        }
+
+        update() {
+          this.x -= PIPE_SPEED;
+        }
+      }
+
+      // --- GLOBAL OBJECTS ---
+      let snail;
+      let pipes = [];
+
+      // --- INITIALIZATION ---
+      function init() {
+        canvas = document.getElementById("gameCanvas");
+        ctx = canvas.getContext("2d");
+
+        // Set up event listeners
+        startBtn.addEventListener("click", startGame);
+        restartBtn.addEventListener("click", startGame);
+
+        // Input handling (Mouse/Touch/Keyboard)
+        window.addEventListener("keydown", (e) => {
+          if (e.code === "Space") {
+            e.preventDefault(); // Stop scrolling
+            handleInput();
+          }
+        });
+
+        canvas.addEventListener("mousedown", (e) => {
+          e.preventDefault();
+          handleInput();
+        });
+
+        canvas.addEventListener(
+          "touchstart",
+          (e) => {
+            e.preventDefault(); // Stop zoom/scroll
+            handleInput();
+          },
+          { passive: false }
+        );
+
+        // Initial Draw
+        resetGameData();
+        drawBackground();
+        snail.draw();
+      }
+
+      function resetGameData() {
+        snail = new Snail();
+        pipes = [];
+        score = 0;
+        frames = 0;
+        scoreDisplay.innerText = score;
+      }
+
+      function startGame() {
+        resetGameData();
+        currentState = "PLAYING";
+
+        // UI Updates
+        startScreen.classList.add("hidden");
+        gameOverScreen.classList.add("hidden");
+        scoreDisplay.classList.remove("hidden");
+
+        // Start Loop
+        if (animationId) cancelAnimationFrame(animationId);
+        loop();
+      }
+
+      function endGame() {
+        currentState = "GAMEOVER";
+
+        // UI Updates
+        finalScoreSpan.innerText = score;
+        scoreDisplay.classList.add("hidden");
+        gameOverScreen.classList.remove("hidden");
+
+        // Note: We don't cancel animation frame immediately so we can draw the dead state once
+      }
+
+      function handleInput() {
+        if (currentState === "PLAYING") {
+          snail.jump();
+        } else if (currentState === "GAMEOVER") {
+          // Optional: Click to restart instantly from game over
+          // startGame();
+        }
+      }
+
+      // --- GAME LOOP ---
+      function loop() {
+        if (currentState === "PLAYING") {
+          update();
+          draw();
+          animationId = requestAnimationFrame(loop);
+        } else if (currentState === "GAMEOVER") {
+          // Draw one last frame to show the crash position, then stop
+          draw();
+        }
+      }
+
+      function update() {
+        frames++;
+
+        // Update Snail
+        snail.update();
+
+        // Manage Pipes
+        // Spawn new pipe every PIPE_SPAWN_RATE frames
+        if (frames % PIPE_SPAWN_RATE === 0) {
+          pipes.push(new Pipe());
+        }
+
+        // Update and Remove Pipes
+        for (let i = 0; i < pipes.length; i++) {
+          let p = pipes[i];
+          p.update();
+
+          // Collision Detection
+          // 1. Horizontal check: is snail within pipe width?
+          // Snail hit box is slightly smaller than image to be forgiving
+          let hitboxX = snail.x + 5;
+          let hitboxY = snail.y + 5;
+          let hitboxW = snail.width - 10;
+          let hitboxH = snail.height - 10;
+
+          if (hitboxX + hitboxW > p.x && hitboxX < p.x + p.width) {
+            // 2. Vertical check: Did we hit top pipe OR bottom pipe?
+            // Top pipe area: 0 to p.topHeight
+            // Bottom pipe area: p.topHeight + PIPE_GAP to CANVAS_HEIGHT
+            if (
+              hitboxY < p.topHeight ||
+              hitboxY + hitboxH > p.topHeight + PIPE_GAP
+            ) {
+              endGame();
+            }
+          }
+
+          // Score Update
+          if (p.x + p.width < snail.x && !p.passed) {
+            score++;
+            scoreDisplay.innerText = score;
+            p.passed = true;
+          }
+
+          // Remove off-screen pipes
+          if (p.x + p.width < 0) {
+            pipes.shift();
+            i--; // Adjust index since array shifted
+          }
+        }
+      }
+
+      function draw() {
+        // Clear Canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        drawBackground();
+
+        // Draw Pipes
+        for (let i = 0; i < pipes.length; i++) {
+          pipes[i].draw();
+        }
+
+        // Draw Ground (Visual only)
+        ctx.fillStyle = "#D7CCC8"; // Light brown
+        ctx.fillRect(0, CANVAS_HEIGHT - 20, CANVAS_WIDTH, 20);
+        ctx.fillStyle = "#795548"; // Darker top border
+        ctx.fillRect(0, CANVAS_HEIGHT - 20, CANVAS_WIDTH, 4);
+
+        // Draw Snail
+        snail.draw();
+      }
+
+      function drawBackground() {
+        // Simple Clouds
+        ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
+        ctx.beginPath();
+        ctx.arc(100, 100, 30, 0, Math.PI * 2);
+        ctx.arc(140, 90, 40, 0, Math.PI * 2);
+        ctx.arc(180, 100, 30, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(300, 200, 20, 0, Math.PI * 2);
+        ctx.arc(330, 190, 30, 0, Math.PI * 2);
+        ctx.arc(360, 200, 20, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Run Init when DOM loads
+      window.onload = init;
+    </script>
+  </body>
+</html>
