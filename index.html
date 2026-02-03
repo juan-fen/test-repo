@@ -1,186 +1,153 @@
-<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
-    <link rel="icon" type="image/x-icon" href="images2/1.jpg">
-    <title>Apple - Macbook Pro</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTML Starter Project</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <!-- Header -->
     <header class="header">
-        <div class="header__left-column">
-        <div class="header__logo">
-            <img class="header__logo__image" src="images2/Apple-Logo.png" alt="Apple Logo"/>
-            <p class="header__logo__text">Apple</p>
+      <div class="header__inner">
+        <h2 class="header__logo">QueryBase</h2>
+        <div class="header__btnGrp">
+          <button class="header__button header__button--submit">
+            Submit a request
+          </button>
+          <button class="header__button header__button--signIn">Sign In</button>
         </div>
-        <nav class="nav">
-            
-            <a class="nav__link" href="#store">Store</a>
-
-            <a class="nav__link" href="#accessories">Accessories</a>
-            <a class="nav__link" href="#blog">Blog</a>
-            <a class="nav__link" href="#support">Support</a>
-            </nav>
-        </div>
-        <div class="header__right-column">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <div class="cart-icon-wrapper">
-                <a href="#basketDropdown" class="cart-icon">
-                    <i class="fa-solid fa-bag-shopping"></i>
-                    <span class="cart-count">1</span>
-            </a>
-            <div id="basketDropdown" class="basket-dropdown">
-                <div class="basket-content">
-                     <a href="#" class="close">&times;</a>
-                     <h2 class="basket-title">In Your Basket</h2>
-                     <div class="basket-item">
-                         <img src="images2/appppp.jpg "MacBook Pro 2026">
-                         <div class="basket-item-details">
-                              <h3>Macbook Pro 2026</h3>
-                              <p>Price: $1999</p>
-                          </div>
-                     </div>
-                 </div>
-            </div>
-        </div>
-    </div>
+      </div>
     </header>
-    <main>
-        <section class="hero fade-in">
-     <div class="hero__image">
-        <img src="images2/appppp.jpg"MacBook Pro 2026">
-     </div>
-     <div class="hero__text">
-        <h1 class="hero__title">Macbook Pro 2026</h1>
-        <h2 class="hero__subtitle">Supercharged for pros.</h2>
-        <p class="hero__description">The most powerful Macbook Pro ever is here. With the blazing-fast M3 pro or M3 Max chip - the first Apple silicon designed for pros — you get groundbreaking performance and amazing battery life. Add to that a stunning Liquid Retina XDR display, the best camera and audio ever in a Mac notebook, and all the ports you need. The first notebook of its kind, this MacBook Pro is a beast.</p>
-        <p class="hero__price">From $1999</p>
-        <div class="hero__buttons">
-            <a class="hero__button" href="#order">Order Now</a>
-            <a class="hero__playbutton" href="#videoModal"><i class="fa-solid fa-play"></i></a>
-       </div>
-    </div> 
-</section>
-<section class="specs fade-in">
-    <div class="spec">
-        <h3 class="spec__title">3.7x</h3>
-        <p class="spec__description">faster CPU performance</p>
-    </div>
-    </div class="spec">
-        <h3 class="spec__title">13x</h3>
-        <p class="spec__description">faster graphics performance</p>
-    </div>
-    <div class="spec">
-        <h3 class="spec__title">11x</h3>
-        <p class="spec__description">faster machine learning</p>
-    </div>
-    </div class="spec">
-        <h3 class="spec__title">21</h3>
-        <p class="spec__description">hours of battery life</p>
-    </div>
-</section>
-</main>
-
-<!-- Video Modal Structure -->
-<div id="videoModal" class="modal">
-    <div class="modal-content">
-        <a href="#" class="close">&times;</a>
-        <iframe width="560" height="315" src="https://www.youtube.com/watch?v=G0cmfY7qdmY" title="Youtube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    </div>
- </div>
-
- <footer class="footer fade-in">
-        <div class="footer__container">
-     
-             <div class="footer__top">
-                 <div class="footer__breadcrumbs">
-                     <a href="#"><i class="fa-solid fa-apple"></i></a>
-                     <span> > </span>
-                     <a href="#">Mac</a>
-                     <span> > </span>
-                     <a href="#">MacBook Pro</a>
-                     <span> > </span>
-                     <a href="#">MacBook Pro 14-inch and 16-inch</a>
-                 </div>
-             </div>
-    
-             <div class="footer__middle">
-
-
-
-              
-             <div class="footer__column">
-             <h4>Explore</h4>
-             <ul>
-                 <li><a href="#">Mac</a></li>
-                 <li><a href="#">iPad</a></li>
-                 <li><a href="#">iPhone</a></li>
-                 <li><a href="#">Watch</a></li>
-                 <li><a href="#">AirPods</a></li>
-                 <li><a href="#">TV & Home</a></li>
-                 <li><a href="#">AirTag</a></li>
-             </ul>
-         </div>
+    <!-- Search Section -->
+    <main class="main-container">
+      <section class="Search">
+        <h1 class="search__title">How can we help?</h1>
+        <div class="search__wrapper">
+          <input class="search__input" placeholder="Search" />
+          <span class="search__searchIcon">&#128269;</span>
+        </div>
+      </section>
+      <!-- FAQ Section -->
+      <section class="faq">
+        <ul class="faq__list">
+          <li class="faq__list-item">
+            <div class="faq__list-item-image">
+              <img
+                height="40"
+                src="/BasicHTML/images/authentication.jpg
+                    "
+              />
+            </div>
+            <div class="faq__card">
+              <h3 class="faq__card-title">Branches</h3>
+              <p class="faq__card-text">
+                QueryBase Branches lets you manage, version, and document your
+                designs in one placeholder
+              </p>
+              <a class="faq__card-link" href="">LearnMore</a>
+            </div>
+          </li>
+          <li></li>
+          <li class="faq__list-item">
+            <div class="faq__list-item-image">
+              <img height="40" src="/BasicHTML/images/OfficeBuilding.webp" />
+            </div>
+            <div class="faq__card">
+              <h3 class="faq__card-title">Manage your account</h3>
+              <p class="faq__card-text">
+                Configure your account settings, such as your email, profile
+                details, and password.
+              </p>
+              <a class="faq__card-link" href="">LearnMore</a>
+            </div>
+          </li>
+          <li></li>
+          <li class="faq__list-item">
+            <div class="faq__list-item-image">
+              <img height="40" src="/BasicHTML/images/TeamManagement.jpg" />
+            </div>
+            <div class="faq__card">
+              <h3 class="faq__card-title">
+                Manage organizations, teams, and projects
+              </h3>
+              <p class="faq__card-text">
+                Use QueryBase organizations, teams, and projects to organize
+                your people and your work.
+              </p>
+              <a class="faq__card-link" href="">LearnMore</a>
+            </div>
+          </li>
+          <li></li>
+          <li class="faq__list-item">
+            <div class="faq__list-item-image">
+              <img height="40" src="/BasicHTML/Images/OfficeBuilding.webp" />
+            </div>
+            <div class="faq__card">
+              <h3 class="faq__card-title">Manage billing</h3>
+              <p class="faq__card-text">
+                Change subscriptions and payment details.
+              </p>
+              <a class="faq__card-link" href="">LearnMore</a>
+            </div>
+          </li>
+          <li></li>
+          <li class="faq__list-item">
+            <div class="faq__list-item-image">
+              <img height="40" src="/BasicHTML/Images/Authentication.jpg" />
+            </div>
+            <div class="faq__card">
+              <h3 class="faq__card-title">Authenticate to QueryBase</h3>
+              <p class="faq__card-text">
+                Set up and configure SSO, SCIM, and Just-in-Time provisioning.
+              </p>
+              <a class="faq__card-link" href="">LearnMore</a>
+            </div>
+          </li>
+          <li></li>
+          <li class="faq__list-item">
+            <div class="faq__list-item-image">
+              <img height="40" src="/BasicHTML/Images/CustomerSupport.webp" />
+            </div>
+            <div class="faq__card">
+              <h3 class="faq__card-title">QueryBase support</h3>
+              <p class="faq__card-text">Get in touch with a human.</p>
+              <a class="faq__card-link" href="">LearnMore</a>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </main>
+    <!-- Footer  -->
+    <footer class="footer">
+      <div class="footer__content">
         <div class="footer__column">
-                <h4>Services</h4>
-                <ul>
-                    <li><a href="#">Apple Music</a></li>
-                    <li><a href="#">Apple TV+</a></li>
-                    <li><a href="#">Apple Arcade</a></li>
-                    <li><a href="#">iCloud</a></li>
-                    <li><a href="#">Apple One</a></li>
-                    <li><a href="#">Apple Books</a></li>
-                    <li><a href="#">Apple Podcasts</a></li>
-                    <li><a href="#">App Store</a></li>
-                </ul>
-            </div>
-            <div class="footer__column">
-                  <h4>For Business</h4>
-                <ul>
-                    <li><a href="#">Apple and Business</a></li>
-                </ul>
-            </div>
-            <div class="footer__column">
-        <h4>Apple Values</h4>
-        <ul>
-            <li><a href="#">Accessibility</a></li>
-            <li><a href="#">Environment</a></li>
-            <li><a href="#">Privacy</a></li>
-        </ul>
-    </div>
-    </div>
-
-
-
-  <div class="footer__column">
-        <h4>About Apple</h4>
-        <ul>
-            <li><a href="#">Career Opportunities</a></li>
-            <li><a href="#">Investors</a></li>
-            <li><a href="#">Ethics & Compliance</a></li>
-            <li><a href="#">Events</a></li>
-        </ul>
-    </div>
-    </div class="footer__column">
-        <h4>Account</h4>
-        <ul>
-            <li><a href="#">Manage Your Apple ID</a></li>
-            <li><a href="#">iCloud.com</a></li>
-        <ul>
-    </div>
-</div>
-<div class="footer__bottom">
-    <span class="footer__bottom-retailer"><a href="#">Find a retailer</a> near you.</span>
-    <div class="footer__legal">
-    <span>Copyright © 2026 Apple Inc. All rights reserved.</span>
-    <a href="#">Privacy Policy</a>
-    <a href="#">Legal</a>
-    <a href="#">Site Map</a>
-    <span>United States</span>
-     </div>
- </div>
-</footer>
-</body>
-</html> 
+          <h3 class="footer__title">QueryBase</h3>
+          <p>Branches</p>
+        </div>
+        <div class="footer__column">
+          <h3 class="footer__title">Resources</h3>
+          <p>Blog</p>
+          <p>Help Center</p>
+          <p>Release Notes</p>
+          <p>Status</p>
+        </div>
+        <div class="footer__column">
+          <h3 class="footer__title">Community</h3>
+          <p>Twitter</p>
+          <p>LinkedIn</p>
+          <p>Facebook</p>
+          <p>Dribbble</p>
+          <p>Podcast</p>
+        </div>
+        <div class="footer__column">
+          <h3 class="footer__title">Company</h3>
+          <p>About Us</p>
+          <p>Careers</p>
+          <p>Legal</p>
+          <p>Contact Us</p>
+          <p>info@querybase.com</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
